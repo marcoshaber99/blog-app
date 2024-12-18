@@ -16,15 +16,17 @@ export default function BlogCard({
 }: BlogCardProps) {
   return (
     <Card className="hover:shadow-lg transition-shadow duration-300 border-blue-500 border-2">
-      <CardHeader>
+      <CardHeader className="pb-2">
         <CardTitle>
-          <Link href={`/blog/${slug}`}>{title}</Link>
+          <Link className="hover:underline" href={`/blog/${slug}`}>
+            {title}
+          </Link>
         </CardTitle>
-        <CardContent>
-          <p className="text-sm text-muted-foreground">{excerpt}</p>
-          <p className="text-sm text-muted-foreground">{date}</p>
-        </CardContent>
       </CardHeader>
+      <CardContent className="space-y-2">
+        <p className="text-sm text-muted-foreground">{excerpt}</p>
+        <p className="text-xs text-muted-foreground mt-2">{date}</p>
+      </CardContent>
     </Card>
   );
 }
