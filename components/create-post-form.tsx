@@ -15,9 +15,13 @@ import {
 } from "./ui/form";
 import { PostSchema } from "@/lib/schemas";
 import type { CreatePostInput } from "@/lib/schemas";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 
 export function CreatePostForm() {
   const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm<CreatePostInput>({
     resolver: zodResolver(PostSchema),
@@ -41,9 +45,19 @@ export function CreatePostForm() {
         throw new Error("Failed to create post");
       }
 
+      toast({
+        title: "Success",
+        description: "Your post has been created.",
+      });
+
       router.push("/");
       router.refresh();
     } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to create post. Please try again.",
+        variant: "destructive",
+      });
       console.error(error);
     }
   }
@@ -59,7 +73,7 @@ export function CreatePostForm() {
               <FormItem>
                 <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <input
+                  <Input
                     {...field}
                     className="w-full p-2 border rounded-md bg-background"
                     placeholder="Enter post title"
@@ -77,7 +91,7 @@ export function CreatePostForm() {
               <FormItem>
                 <FormLabel>Content</FormLabel>
                 <FormControl>
-                  <textarea
+                  <Textarea
                     {...field}
                     className="w-full p-2 border rounded-md bg-background min-h-[200px]"
                     placeholder="Write your post content..."
