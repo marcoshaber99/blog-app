@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 
+// Props for a blog post preview card
 interface BlogCardProps {
   title: string;
   excerpt: string;
@@ -15,7 +16,8 @@ export default function BlogCard({
   slug,
 }: BlogCardProps) {
   return (
-    <Card className="hover:shadow-lg transition-shadow duration-300 border-green-200 border-2 border-opacity-40">
+    // Card with hover effect and subtle border
+    <Card className="hover:shadow-lg transition-shadow duration-300 border-primary/20 border-2">
       <CardHeader className="pb-2">
         <CardTitle>
           <Link className="hover:underline" href={`/blog/${slug}`}>
@@ -24,8 +26,12 @@ export default function BlogCard({
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">
-        <p className="text-sm text-muted-foreground">{excerpt}</p>
-        <p className="text-xs text-muted-foreground mt-2">{date}</p>
+        {/* Excerpt with 3-line clamp for consistent height */}
+        <p className="text-sm text-muted-foreground line-clamp-3">{excerpt}</p>
+        {/* Semantic time tag for better accessibility */}
+        <time dateTime={date} className="text-xs text-muted-foreground block">
+          {date}
+        </time>
       </CardContent>
     </Card>
   );

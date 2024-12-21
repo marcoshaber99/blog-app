@@ -10,7 +10,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "Minimalist Blog",
+  title: "Marcode Blog",
   description: "A modern, minimalistic blog app",
 };
 
@@ -29,7 +29,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-5xl">
+          <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-5xl mb-8">
             {children}
           </main>
           <Footer />

@@ -3,8 +3,14 @@
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Button } from "./ui/button";
-import { Card } from "./ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -12,12 +18,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { PostSchema } from "@/lib/schemas";
-import type { CreatePostInput } from "@/lib/schemas";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import Tiptap from "@/components/tiptap";
+import { PostSchema, type CreatePostInput } from "@/lib/schemas";
 
 export function CreatePostForm() {
   const router = useRouter();
@@ -35,23 +40,15 @@ export function CreatePostForm() {
     try {
       const response = await fetch("/api/posts", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to create post");
-      }
+      if (!response.ok) throw new Error("Failed to create post");
 
       toast({
         title: "Success",
         description: "Your post has been created.",
-        style: {
-          border: "1px solid hsl(136, 100%, 30%)",
-          boxShadow: "0 0 5px hsla(var(--primary), 0.4)",
-        },
       });
 
       router.push("/");
@@ -67,52 +64,49 @@ export function CreatePostForm() {
   }
 
   return (
-    <Card className="max-w-2xl mx-auto p-6">
+    <Card>
+      <CardHeader>
+        <CardTitle>Create New Post</CardTitle>
+      </CardHeader>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    className="w-full p-2 border rounded-md bg-background"
-                    placeholder="Enter post title"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Content</FormLabel>
-                <FormControl>
-                  <Textarea
-                    {...field}
-                    className="w-full p-2 border rounded-md bg-background min-h-[200px]"
-                    placeholder="Write your post content..."
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting ? "Creating..." : "Create Post"}
-          </Button>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <CardContent className="space-y-6">
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Enter post title" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="content"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Content</FormLabel>
+                  <FormControl>
+                    <Tiptap value={field.value} onChange={field.onChange} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+          <CardFooter>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting ? "Creating..." : "Create Post"}
+            </Button>
+          </CardFooter>
         </form>
       </Form>
     </Card>
