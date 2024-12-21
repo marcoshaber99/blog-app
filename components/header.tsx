@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 import { Button } from "./ui/button";
+import { PenBoxIcon } from "lucide-react";
 
 export default function Header() {
   return (
@@ -11,7 +12,9 @@ export default function Header() {
         </Link>
         <nav className="flex items-center gap-2">
           <Button asChild variant="ghost">
-            <Link href="/create">Create</Link>
+            <Link href="/create">
+              <PenBoxIcon className="w-5 h-5" />
+            </Link>
           </Button>
           <ThemeToggle />
         </nav>

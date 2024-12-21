@@ -15,7 +15,7 @@ export default function BlogCard({
   slug,
 }: BlogCardProps) {
   return (
-    <Card className="hover:shadow-lg transition-shadow duration-300 border-blue-500 border-2">
+    <Card className="hover:shadow-lg transition-shadow duration-300 border-green-200 border-2 border-opacity-40">
       <CardHeader className="pb-2">
         <CardTitle>
           <Link className="hover:underline" href={`/blog/${slug}`}>

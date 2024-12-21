@@ -48,6 +48,10 @@ export function CreatePostForm() {
       toast({
         title: "Success",
         description: "Your post has been created.",
+        style: {
+          border: "1px solid hsl(136, 100%, 30%)",
+          boxShadow: "0 0 5px hsla(var(--primary), 0.4)",
+        },
       });
 
       router.push("/");
